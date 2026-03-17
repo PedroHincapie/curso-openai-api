@@ -1,0 +1,14 @@
+# Entornos virtuales
+venv/
+env/
+.venv/
+.env
+
+# Archivos de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Otros
+.DS_Store
