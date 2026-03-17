@@ -55,3 +55,20 @@ python3 ChatCompletionAPI/script.py
 ```
 
 Deberías ver en la consola la respuesta de la IA (PeterVision) interactuando contigo.
+
+## Paso 5: Control de Versiones (Git)
+
+El proyecto ya está inicializado como un repositorio de Git e incluye un archivo `.gitignore` para omitir tu clave de API (`.env`) y los archivos de entorno virtual.
+
+Comandos básicos para versionar tus próximos cambios:
+
+```bash
+# Ver el estado de los archivos
+git status
+
+# Agregar cambios para el próximo commit
+git add .
+
+# Guardar los cambios con un mensaje
+git commit -m "Mensaje describiendo los cambios"
+```
