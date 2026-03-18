@@ -74,6 +74,56 @@ def obtener_clima_por_latitud_longitud(latitud: float, longitud: float):
         return {"error": f"Error en la API: {response.status_code}"}
 
 
+functions = [
+    {
+        "type":"function",
+        "function":{
+            "name":"obtener_latitud_longitud_por_ciudad",
+            "description":"Usa esta funcion, para obtener la latitud y longitud de una ciudad",
+            "parameters":{
+                "type":"object",
+                "properties":{
+                    "ciudad":{
+                        "type":"string",
+                        "description":"Ciudad"
+                    }
+                },
+                "required":["ciudad"]
+            },
+            "output": {
+                "type": "string",
+                "description": "Latitud y longitud de la ciudad pedida por el usario"
+            }
+
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "obtener_clima_por_latitud_longitud",
+            "description": "Usa esta funcion, para obtener el clima de una ciudad por latitud y longitud",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "latitud": {
+                        "type": "number",
+                        "description": "Latitud de la ciudad"
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "description": "Longitud de la ciudad"
+                    }
+                },
+                "required": ["latitud", "longitud"]
+            },
+            "output": {
+                "type": "string",
+                "description": "Clima de la ciudad pedida por el usario"
+            }
+        }
+    }
+]
+
 messages = [
     {
         "role": "system",
