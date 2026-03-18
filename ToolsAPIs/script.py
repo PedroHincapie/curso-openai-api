@@ -131,7 +131,7 @@ messages = [
     },
     {
         "role": "user",
-        "content": "Cual es la temperatura actual en Medellin Colombia"
+        "content": "Cual es la temperatura actual en Medellin"
     }
 ]
 
