@@ -76,25 +76,20 @@ def obtener_clima_por_latitud_longitud(latitud: float, longitud: float):
 
 functions = [
     {
-        "type":"function",
-        "function":{
-            "name":"obtener_latitud_longitud_por_ciudad",
-            "description":"Usa esta funcion, para obtener la latitud y longitud de una ciudad",
-            "parameters":{
-                "type":"object",
-                "properties":{
-                    "ciudad":{
-                        "type":"string",
-                        "description":"Ciudad"
+        "type": "function",
+        "function": {
+            "name": "obtener_latitud_longitud_por_ciudad",
+            "description": "Usa esta funcion, para obtener la latitud y longitud de una ciudad",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "ciudad": {
+                        "type": "string",
+                        "description": "Ciudad"
                     }
                 },
-                "required":["ciudad"]
-            },
-            "output": {
-                "type": "string",
-                "description": "Latitud y longitud de la ciudad pedida por el usario"
+                "required": ["ciudad"]
             }
-
         }
     },
     {
@@ -115,10 +110,6 @@ functions = [
                     }
                 },
                 "required": ["latitud", "longitud"]
-            },
-            "output": {
-                "type": "string",
-                "description": "Clima de la ciudad pedida por el usario"
             }
         }
     }
