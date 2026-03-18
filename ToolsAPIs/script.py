@@ -123,15 +123,67 @@ messages = [
     },
     {
         "role": "user",
-        "content": "Cual es la temperatura actual en Medellin"
+        "content": "Cual es la temperatura actual en Pasto"
     }
 ]
 
-response = client.chat.completions.create(
-    model="gpt-4o-mini",
-    messages=messages,
-)
 
-print(response.choices[0].message.content)
+# Diccionario para mapear nombres de funciones a las funciones reales
+available_functions = {
+    "obtener_latitud_longitud_por_ciudad": obtener_latitud_longitud_por_ciudad,
+    "obtener_clima_por_latitud_longitud": obtener_clima_por_latitud_longitud,
+}
+
+print("Iniciando conversacion con la IA...\n")
+
+while True:
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=messages,
+        tools=functions,
+        tool_choice="auto"    
+    )
     
+    response_message = response.choices[0].message
     
+    # Si la IA decide llamar a una o más herramientas
+    if response_message.tool_calls:
+        # 1. Agregamos el mensaje de la IA a la conversación (requerido)
+        messages.append(response_message)
+        
+        for tool_call in response_message.tool_calls:
+            function_name = tool_call.function.name
+            print(f"--> La IA llamó a la herramienta: {function_name}")
+            
+            # 2. Obtenemos la función y los argumentos
+            function_to_call = available_functions[function_name]
+            function_args = json.loads(tool_call.function.arguments)
+            
+            # 3. Ejecutamos nuestra función de Python con esos argumentos
+            if function_name == "obtener_latitud_longitud_por_ciudad":
+                function_response = function_to_call(
+                    ciudad=function_args.get("ciudad")
+                )
+            elif function_name == "obtener_clima_por_latitud_longitud":
+                function_response = function_to_call(
+                    latitud=function_args.get("latitud"),
+                    longitud=function_args.get("longitud")
+                )
+            
+            print(f"    Resultado devuelto a la IA: {function_response}\n")
+            
+            # 4. Enviamos la respuesta de la función de vuelta a la IA
+            messages.append(
+                {
+                    "tool_call_id": tool_call.id,
+                    "role": "tool",
+                    "name": function_name,
+                    "content": json.dumps(function_response),
+                }
+            )
+            
+    else:
+        # Si no hay llamadas a herramientas, significa que la IA nos dio la respuesta final en texto
+        print("--- Respuesta Final de la IA ---")
+        print(response_message.content)
+        break
